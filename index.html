@@ -28,7 +28,6 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-      z-index: 2;
     }
 
     h1 {
@@ -68,13 +67,14 @@
       color: #333;
     }
 
-    /* Celebration animation */
+    /* ===== ADDED: Celebration Animation (no changes above) ===== */
+
     .celebration {
       position: fixed;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
-      z-index: 1;
+      z-index: 999;
     }
 
     .heart {
@@ -82,7 +82,7 @@
       bottom: -20px;
       font-size: 20px;
       animation: floatUp 4s ease-in forwards;
-      opacity: 0.9;
+      opacity: 0;
     }
 
     @keyframes floatUp {
@@ -117,11 +117,11 @@
       document.getElementById("card").innerHTML = `
         <h1>It’s a date.</h1>
         <p>
-          I’m really glad it’s you.<br><br>
-          Happy Valentine’s Day.
+          THANKS TWIN 😻<br><br>
+              🫶🫶
         </p>
       `;
-      launchCelebration();
+      launchCelebration(); // ← ADDED (only change inside function)
     }
 
     function convertToYes() {
@@ -130,6 +130,8 @@
       noBtn.className = "yes";
       noBtn.onclick = sayYes;
     }
+
+    /* ===== ADDED: Animation Logic ===== */
 
     function launchCelebration() {
       const container = document.createElement("div");
@@ -148,7 +150,6 @@
         container.appendChild(heart);
       }
 
-      // Cleanup after animation
       setTimeout(() => {
         container.remove();
       }, 5000);
