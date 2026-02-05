@@ -33,7 +33,7 @@
 
     @keyframes popIn {
       from {
-        transform: scale(0.9);
+        transform: scale(0.85);
         opacity: 0;
       }
       to {
@@ -67,12 +67,17 @@
       border-radius: 40px;
       cursor: pointer;
       width: 100%;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
     }
 
     button:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2) inset;
+      transform: scale(0.94);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.25) inset;
     }
 
     .yes {
@@ -93,37 +98,42 @@
     <p>Will you be my Valentine?</p>
 
     <div class="buttons">
-      <button class="yes" onclick="sayYes()">Yes</button>
-      <button class="no" id="noBtn" onclick="convertToYes()">No</button>
+      <button class="yes" id="yesBtn">Yes</button>
+      <button class="no" id="noBtn">No</button>
     </div>
   </div>
 
-  <!-- Audio (does NOT autoplay) -->
-  <audio id="bgMusic">
+  <!-- Audio -->
+  <audio id="bgMusic" preload="auto">
     <source src="audio/teenagedirtbag.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    function sayYes() {
-      const music = document.getElementById("bgMusic");
+    const music = document.getElementById("bgMusic");
+    const card = document.getElementById("card");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    yesBtn.addEventListener("click", () => {
       music.currentTime = 0;
-      music.play();
+      music.play().catch(() => {}); // prevent silent failure
 
-      document.getElementById("card").innerHTML = `
-        <h1>It’s a date 💖</h1>
-        <p>
-          I’m really glad it’s you.<br><br>
-          Happy Valentine’s Day.
-        </p>
-      `;
-    }
+      setTimeout(() => {
+        card.innerHTML = `
+          <h1>It’s a date 💖</h1>
+          <p>
+            I’m really glad it’s you.<br><br>
+            Happy Valentine’s Day.
+          </p>
+        `;
+      }, 150);
+    });
 
-    function convertToYes() {
-      const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("click", () => {
       noBtn.textContent = "Yes";
       noBtn.className = "yes";
-      noBtn.onclick = sayYes;
-    }
+      noBtn.onclick = yesBtn.onclick;
+    });
   </script>
 
 </body>
