@@ -52,7 +52,7 @@
 
     p {
       font-size: 18px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       line-height: 1.4;
     }
 
@@ -92,6 +92,7 @@
       color: #333;
     }
 
+    /* ❤️ Floating hearts */
     .heart {
       position: absolute;
       bottom: -20px;
@@ -111,6 +112,42 @@
         opacity: 0;
       }
     }
+
+    /* 🖼️ Photo gallery */
+    .photos {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 20px 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .photos img {
+      width: 90px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 3px solid #ffd1dc;
+      box-shadow:
+        0 8px 18px rgba(0,0,0,0.25),
+        0 0 10px rgba(255, 77, 109, 0.35);
+      transition: transform 0.3s ease;
+    }
+
+    .photos img:hover {
+      transform: scale(1.08);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -125,6 +162,7 @@
     </div>
   </div>
 
+  <!-- 🎵 Audio -->
   <audio id="bgMusic" preload="auto">
     <source src="audio/teenagedirtbag.mp3" type="audio/mpeg">
   </audio>
@@ -142,26 +180,32 @@
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = 20 + Math.random() * 20 + "px";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 3000);
     }
 
     yesBtn.addEventListener("click", () => {
-      // 🔊 START SONG FROM 40 SECONDS (ONLY CHANGE)
+      // 🎶 Start song at 40 seconds
       music.currentTime = 40;
       music.play().catch(() => {});
 
+      // ❤️ Hearts burst
       for (let i = 0; i < 20; i++) {
         setTimeout(createHeart, i * 100);
       }
 
+      // 💖 New content with photos
       setTimeout(() => {
         card.innerHTML = `
-          <h1>It’s a date 💖</h1>
-          <p>
-            I’m really glad it’s you.<br><br>
-            Happy Valentine’s Day.
-          </p>
+          <h1>I LOVE YOU TWIN 🫶</h1>
+          <p>😘😘</p>
+
+          <div class="photos">
+            <img src="images/pic1.jpg" alt="photo 1">
+            <img src="images/pic2.jpg" alt="photo 2">
+            <img src="images/pic3.jpg" alt="photo 3">
+          </div>
+
+          <p>Happy Valentine’s Day!!</p>
         `;
       }, 300);
     });
@@ -175,4 +219,3 @@
 
 </body>
 </html>
-
