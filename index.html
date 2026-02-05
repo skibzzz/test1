@@ -28,18 +28,17 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-      z-index: 2;
-      animation: cardEnter 0.6s ease-out;
+      animation: popIn 0.6s ease;
     }
 
-    @keyframes cardEnter {
+    @keyframes popIn {
       from {
+        transform: scale(0.9);
         opacity: 0;
-        transform: scale(0.95);
       }
       to {
-        opacity: 1;
         transform: scale(1);
+        opacity: 1;
       }
     }
 
@@ -68,20 +67,12 @@
       border-radius: 40px;
       cursor: pointer;
       width: 100%;
-      transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        background-color 0.2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     button:active {
-      transform: scale(0.96);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transform: scale(0.95);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2) inset;
     }
 
     .yes {
@@ -89,64 +80,9 @@
       color: white;
     }
 
-    .yes:hover {
-      background-color: #ff335a;
-    }
-
     .no {
       background-color: #ddd;
       color: #333;
-    }
-
-    .no:hover {
-      background-color: #ccc;
-    }
-
-    /* Celebration animation */
-    .celebration {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp 4s ease-in forwards;
-      opacity: 0;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.6);
-        opacity: 0;
-      }
-    }
-
-    /* Result animation */
-    .result {
-      animation: resultPop 0.5s ease-out;
-    }
-
-    @keyframes resultPop {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
     }
   </style>
 </head>
@@ -162,18 +98,24 @@
     </div>
   </div>
 
+  <!-- Audio (does NOT autoplay) -->
+  <audio id="bgMusic">
+    <source src="audio/teenagedirtbag.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     function sayYes() {
+      const music = document.getElementById("bgMusic");
+      music.currentTime = 0;
+      music.play();
+
       document.getElementById("card").innerHTML = `
-        <div class="result">
-          <h1>It’s a date.</h1>
-          <p>
-            I’m really glad it’s you.<br><br>
-            Happy Valentine’s Day.
-          </p>
-        </div>
+        <h1>It’s a date 💖</h1>
+        <p>
+          I’m really glad it’s you.<br><br>
+          Happy Valentine’s Day.
+        </p>
       `;
-      launchCelebration();
     }
 
     function convertToYes() {
@@ -181,28 +123,6 @@
       noBtn.textContent = "Yes";
       noBtn.className = "yes";
       noBtn.onclick = sayYes;
-    }
-
-    function launchCelebration() {
-      const container = document.createElement("div");
-      container.className = "celebration";
-      document.body.appendChild(container);
-
-      const hearts = ["❤️", "💖", "💕", "💘"];
-
-      for (let i = 0; i < 25; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDelay = Math.random() * 1.5 + "s";
-        heart.style.fontSize = 16 + Math.random() * 20 + "px";
-        container.appendChild(heart);
-      }
-
-      setTimeout(() => {
-        container.remove();
-      }, 5000);
     }
   </script>
 
