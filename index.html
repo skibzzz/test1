@@ -92,7 +92,6 @@
       color: #333;
     }
 
-    /* Heart animation */
     .heart {
       position: absolute;
       bottom: -20px;
@@ -126,7 +125,6 @@
     </div>
   </div>
 
-  <!-- Audio -->
   <audio id="bgMusic" preload="auto">
     <source src="audio/teenagedirtbag.mp3" type="audio/mpeg">
   </audio>
@@ -145,16 +143,14 @@
       heart.style.fontSize = 20 + Math.random() * 20 + "px";
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 3000);
+      setTimeout(() => heart.remove(), 3000);
     }
 
     yesBtn.addEventListener("click", () => {
-      music.currentTime = 0;
+      // 🔊 START SONG FROM 40 SECONDS (ONLY CHANGE)
+      music.currentTime = 40;
       music.play().catch(() => {});
 
-      // Hearts burst
       for (let i = 0; i < 20; i++) {
         setTimeout(createHeart, i * 100);
       }
@@ -179,3 +175,4 @@
 
 </body>
 </html>
+
